@@ -1,0 +1,453 @@
+<title>Dua Penjelas, Satu Rekaman</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+/* Layout: one reading column; the two instruments break out full-width as inset apparatus. */
+:root{
+  --bg:#F5F7FA; --surface:#FFFFFF; --sunk:#EDF1F6;
+  --ink:#15293F; --ink-soft:#5A6E85; --ink-faint:#8A9BAE;
+  --line:#DBE3EC; --line-soft:#E9EEF4;
+  --accent:#C2185B; --accent-soft:#FBEDF3;
+  --blue:#3C6EA5; --blue-soft:#E8F0F9;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E141C; --surface:#151D27; --sunk:#111922;
+  --ink:#E7EDF4; --ink-soft:#9FB0C2; --ink-faint:#71849A;
+  --line:#26323F; --line-soft:#1D2731;
+  --accent:#F28BB2; --accent-soft:#2C1A23;
+  --blue:#84ACDC; --blue-soft:#17222F;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0E141C; --surface:#151D27; --sunk:#111922;
+  --ink:#E7EDF4; --ink-soft:#9FB0C2; --ink-faint:#71849A;
+  --line:#26323F; --line-soft:#1D2731;
+  --accent:#F28BB2; --accent-soft:#2C1A23;
+  --blue:#84ACDC; --blue-soft:#17222F;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.62;margin:0}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+.wide{max-width:960px}
+.col{max-width:720px;width:100%;align-self:center}
+h1,h2,h3,.kicker,.num,button,label,th{font-family:var(--display)}
+h1{font-size:clamp(2rem,6vw,3.1rem);line-height:1.04;font-weight:700;letter-spacing:-.02em;text-wrap:balance;margin:0 0 .5rem}
+h2{font-size:clamp(1.35rem,3.4vw,1.75rem);font-weight:700;letter-spacing:-.015em;line-height:1.2;text-wrap:balance;margin:0}
+h3{font-size:1.02rem;font-weight:700;letter-spacing:-.005em;margin:0}
+p{margin:0}
+a{color:var(--accent)}
+.kicker{font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.sub{color:var(--ink-soft)}
+.small{font-size:.86rem;line-height:1.5}
+
+/* hero */
+.hero{margin-top:calc(-1 * env(safe-area-inset-top,0px));padding-top:calc(env(safe-area-inset-top,0px) + 3.2rem);padding-bottom:2.6rem;background:var(--surface);border-bottom:1px solid var(--line)}
+.hero .wrap{display:flex;flex-direction:column;gap:1rem}
+.lede{font-size:1.1rem;color:var(--ink-soft);max-width:34em}
+.scoreline{display:flex;flex-wrap:wrap;gap:1.6rem;margin-top:.6rem;padding-top:1.2rem;border-top:1px solid var(--line-soft)}
+.score{display:flex;flex-direction:column;gap:.1rem;min-width:0}
+.score .v{font-family:var(--mono);font-size:1.6rem;font-weight:600;letter-spacing:-.02em;line-height:1}
+.score .k{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+.v-obs{color:var(--accent)} .v-null{color:var(--blue)}
+
+section{padding-block:2.6rem;border-bottom:1px solid var(--line-soft)}
+section .wrap{display:flex;flex-direction:column;gap:1.05rem}
+.sechead{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.1rem}
+
+/* panels */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:1.1rem 1.15rem;display:flex;flex-direction:column;gap:.6rem}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:.85rem}
+.two > *{min-width:0}
+.branch-h{display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap}
+.tag{font-family:var(--mono);font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .45rem;border-radius:2px}
+.tag.b{background:var(--blue-soft);color:var(--blue)}
+.tag.a{background:var(--accent-soft);color:var(--accent)}
+.chain{font-family:var(--mono);font-size:.82rem;color:var(--ink);line-height:1.8}
+.chain i{color:var(--ink-faint);font-style:normal;padding:0 .2em}
+
+/* table */
+.tbl{width:100%;border-collapse:collapse;font-size:.88rem}
+.tbl th{font-size:.66rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);text-align:left;padding:0 .55rem .4rem 0;border-bottom:1px solid var(--line)}
+.tbl td{padding:.42rem .55rem .42rem 0;border-bottom:1px solid var(--line-soft);vertical-align:top}
+.tbl td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;padding-right:1rem}
+.scroller{overflow-x:auto}
+
+/* instrument */
+.rig{background:var(--sunk);border:1px solid var(--line);border-radius:3px;padding:1.05rem;display:flex;flex-direction:column;gap:.9rem}
+.rig-head{display:flex;justify-content:space-between;align-items:baseline;gap:.8rem;flex-wrap:wrap}
+.readout{display:flex;flex-wrap:wrap;gap:1.3rem}
+.readout .v{font-family:var(--mono);font-size:1.3rem;font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums}
+.readout .k{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+.ctrls{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+button{font-family:var(--display);font-size:.84rem;font-weight:700;letter-spacing:-.005em;color:var(--surface);background:var(--ink);border:1px solid var(--ink);border-radius:2px;padding:.46rem .85rem;cursor:pointer}
+button.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+button:hover{opacity:.88}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+svg{display:block;width:100%;height:auto;max-width:100%}
+.axis{font-family:var(--mono);font-size:8.5px;fill:var(--ink-faint)}
+.note{font-size:.8rem;color:var(--ink-faint);line-height:1.5}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.slider-row{display:flex;flex-direction:column;gap:.3rem}
+.slider-row label{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+.toggle{display:flex;gap:0;border:1px solid var(--line);border-radius:2px;overflow:hidden;width:fit-content}
+.toggle button{border:0;border-radius:0;background:transparent;color:var(--ink-soft);font-size:.78rem;padding:.4rem .7rem}
+.toggle button[aria-pressed=true]{background:var(--ink);color:var(--surface)}
+
+/* bars */
+.bars{display:flex;flex-direction:column;gap:.55rem}
+.barrow{display:grid;grid-template-columns:minmax(0,1fr) 3.2rem;gap:.6rem;align-items:center}
+.barlab{font-size:.84rem;min-width:0}
+.bartrack{height:9px;background:var(--line-soft);border-radius:1px;overflow:hidden;margin-top:.22rem}
+.barfill{height:100%}
+.barval{font-family:var(--mono);font-size:.8rem;text-align:right;font-variant-numeric:tabular-nums}
+
+ul{margin:0;padding-left:1.1rem;display:flex;flex-direction:column;gap:.45rem}
+li::marker{color:var(--accent)}
+details{border-top:1px solid var(--line-soft);padding-block:.7rem}
+details summary{cursor:pointer;font-family:var(--display);font-weight:700;font-size:.95rem;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";color:var(--accent);font-family:var(--mono);margin-right:.5rem}
+details[open] summary::before{content:"\2212"}
+details p{margin-top:.5rem;font-size:.93rem;color:var(--ink-soft)}
+footer{padding-block:2.2rem 3rem;color:var(--ink-faint);font-size:.82rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+.langsw{position:fixed;top:12px;right:14px;z-index:50;font-family:var(--display);font-size:.78rem;font-weight:700;
+  text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);
+  border-radius:2px;padding:.34rem .6rem}
+.langsw:hover{border-color:var(--accent);color:var(--accent)}
+@media (max-width:600px){.langsw{top:8px;right:8px;font-size:.72rem;padding:.28rem .5rem}}
+</style>
+
+<a class="langsw" href="index.html">English</a>
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">Panduan dasar</span>
+    <h1>Dua penjelas melihat rekaman yang sama</h1>
+    <p class="lede">Dua program menebak emosi dari suara orang berbicara bahasa Arab. Keduanya sering benar. Pertanyaannya bukan siapa yang lebih akurat — melainkan apakah keduanya menunjuk bagian suara yang sama sebagai alasannya.</p>
+    <div class="scoreline">
+      <div class="score"><span class="v v-obs mono">19,78%</span><span class="k">kesesuaian teramati</span></div>
+      <div class="score"><span class="v v-null mono">19,87%</span><span class="k">kesesuaian kebetulan</span></div>
+      <div class="score"><span class="v mono">996</span><span class="k">rekaman berpasangan</span></div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="kicker">01 · Pertanyaannya</span><h2>Dua dokter, satu pasien</h2></div>
+    <p>Dua dokter memeriksa pasien yang sama. Keduanya menyimpulkan “pasien ini demam”. Tapi ketika ditanya alasannya, yang pertama menjawab “suhunya 39 derajat”, yang kedua menjawab “wajahnya memerah dan ia menggigil”. Kesimpulannya sama; <em>buktinya</em> berbeda.</p>
+    <p>Paper ini menguji hal yang persis sama pada mesin. Kalau dua sistem AI yang sama-sama akurat ternyata menunjuk hal yang berbeda, maka “penjelasan” yang diberikan sebuah sistem AI mungkin lebih mencerminkan cara sistem itu dibangun daripada sifat suara manusia.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="kicker">02 · Bahannya</span><h2>Dua cara menggambarkan suara yang sama</h2></div>
+    <p>Empat korpus Arab — SAUDI, YSED, ERDMA, KEDAS — menyumbang 1.000 rekaman terkunci yang tidak pernah dipakai melatih. Tiap rekaman masuk ke dua jalur sekaligus.</p>
+    <div class="two">
+      <div class="panel">
+        <div class="branch-h"><span class="tag b">Jalur A</span><h3>Angka ringkasan</h3></div>
+        <p class="chain">88 angka eGeMAPS <i>→</i> CatBoost <i>→</i> TreeSHAP</p>
+        <p class="small sub">Rekaman diringkas jadi 88 ukuran: rata-rata nada, seberapa keras, seberapa serak. TreeSHAP lalu menjawab <strong>sifat mana</strong> yang paling mendorong keputusan.</p>
+        <p class="note">Ringkasan ini kehilangan informasi <em>kapan</em> sesuatu terjadi.</p>
+      </div>
+      <div class="panel">
+        <div class="branch-h"><span class="tag a">Jalur B</span><h3>Gelombang mentah</h3></div>
+        <p class="chain">Gelombang suara <i>→</i> XLS-R 300M <i>→</i> Integrated Gradients</p>
+        <p class="small sub">Rekaman masuk apa adanya, 16.000 angka per detik. Integrated Gradients menjawab <strong>saat mana</strong> yang paling mendorong keputusan.</p>
+        <p class="note">Peta ini tidak tahu sifat akustik apa yang ada di saat itu.</p>
+      </div>
+    </div>
+    <p>Di sinilah kesulitannya: jalur A menjawab <em>sifat apa</em>, jalur B menjawab <em>kapan</em>. Keduanya tidak bisa langsung dibandingkan — jadi paper membangun jembatan.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="kicker">03 · Jembatannya</span><h2>Empat konsep yang bisa dinyatakan di kedua sisi</h2></div>
+    <div class="scroller"><table class="tbl">
+      <thead><tr><th>Konsep</th><th>Sisi TreeSHAP</th><th class="n">Jumlah</th><th>Sisi IG</th></tr></thead>
+      <tbody>
+        <tr><td>Kekerasan</td><td class="sub">descriptor loudness</td><td class="n">12</td><td class="sub">saat kekerasan berubah</td></tr>
+        <tr><td>Nada</td><td class="sub">descriptor pitch</td><td class="n">10</td><td class="sub">saat nada bergerak</td></tr>
+        <tr><td>Spektral</td><td class="sub">descriptor spektral</td><td class="n">12</td><td class="sub">saat warna bunyi berubah</td></tr>
+        <tr><td>Voicing</td><td class="sub">descriptor voicing</td><td class="n">5</td><td class="sub">saat beralih bersuara</td></tr>
+      </tbody>
+    </table></div>
+    <p>Tiap sisi memilih satu konsep yang paling dominan untuk tiap rekaman. Lalu pertanyaannya sederhana: <strong>apakah kedua pilihan itu sama?</strong></p>
+    <p class="note">Keempat konsep ini alat bantu buatan peneliti, bukan padanan akustik yang sudah tervalidasi. Paper menyatakannya berulang kali.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap wide">
+    <div class="sechead"><span class="kicker">04 · Alat ukurnya</span><h2>Berapa banyak kecocokan yang muncul dari kebetulan saja?</h2></div>
+    <p class="col">Kedua sisi cocok pada 197 dari 996 rekaman — 19,78%. Tapi angka itu sendirian tidak berarti apa-apa. Dua pemberi label yang sama sekali tidak berhubungan tetap akan sering cocok, hanya karena kebiasaan masing-masing.</p>
+    <p class="col">Cara mengetahuinya: hancurkan <em>satu</em> hal saja — pasangannya. Ambil label TreeSHAP dari satu rekaman, pasangkan dengan label IG dari rekaman lain di korpus dan emosi yang sama. Semua yang lain dipertahankan utuh. Tombol di bawah menjalankan tepat prosedur itu, pada data asli paper ini.</p>
+
+    <div class="rig">
+      <div class="rig-head">
+        <div class="readout">
+          <div><div class="v v-obs mono">19,78%</div><div class="k">teramati</div></div>
+          <div><div class="v v-null mono" id="nullMean">—</div><div class="k">rata-rata acakan</div></div>
+          <div><div class="v mono" id="runCount">0</div><div class="k">pengacakan</div></div>
+          <div><div class="v mono" id="beatCount">—</div><div class="k">acakan ≥ teramati</div></div>
+        </div>
+      </div>
+      <svg id="hist" viewBox="0 0 640 230" role="img" aria-label="Sebaran kesesuaian dari pengacakan, dengan penanda nilai teramati"></svg>
+      <div class="ctrls">
+        <button id="b1">Acak sekali</button>
+        <button id="b200" class="ghost">Acak 200×</button>
+        <button id="bReset" class="ghost">Ulang dari nol</button>
+      </div>
+      <p class="note">Tiap pengacakan mengacak ulang label IG <em>di dalam</em> tiap kelompok korpus × emosi, memakai 996 pasangan label yang sama persis dengan yang dipakai paper. Garis merah muda adalah kesesuaian yang sebenarnya.</p>
+    </div>
+
+    <p class="col">Perhatikan ke mana garis merah muda jatuh: tepat di tengah tumpukan. Kesesuaian yang sebenarnya tidak bisa dibedakan dari kebetulan. Dalam paper, 20.000 pengacakan memberi nilai <span class="mono">p = 0,9586</span>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="kicker">05 · Hasilnya</span><h2>Tidak ada korespondensi</h2></div>
+    <div class="scroller"><table class="tbl">
+      <thead><tr><th>Korpus</th><th class="n">Cocok</th><th class="n">Dari</th><th class="n">Persen</th></tr></thead>
+      <tbody>
+        <tr><td>SAUDI</td><td class="n">12</td><td class="n">25</td><td class="n">48,0%</td></tr>
+        <tr><td>YSED</td><td class="n">44</td><td class="n">178</td><td class="n">24,7%</td></tr>
+        <tr><td>ERDMA</td><td class="n">24</td><td class="n">194</td><td class="n">12,4%</td></tr>
+        <tr><td>KEDAS</td><td class="n">117</td><td class="n">599</td><td class="n">19,5%</td></tr>
+        <tr><td><strong>Total</strong></td><td class="n"><strong>197</strong></td><td class="n"><strong>996</strong></td><td class="n"><strong>19,8%</strong></td></tr>
+      </tbody>
+    </table></div>
+    <p>SAUDI terlihat tinggi, tapi hanya 25 rekaman — terlalu sedikit untuk disimpulkan apa pun. Ketika semua 16 kelompok diuji dan dikoreksi untuk pengujian ganda, tidak satu pun bertahan.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap wide">
+    <div class="sechead"><span class="kicker">06 · Temuan kedua</span><h2>Kenapa peta IG-nya sempat rusak</h2></div>
+    <p class="col">Integrated Gradients punya jaminan matematis bernama <strong>completeness</strong>: kalau semua atribusi dijumlahkan, hasilnya harus persis sama dengan selisih skor antara rekaman asli dan keheningan. Kalau tidak, peta itu tidak benar-benar menjelaskan keputusan modelnya.</p>
+    <p class="col">IG bekerja dengan memudarkan rekaman dari hening ke utuh, seperti memutar tombol volume dari 0 ke 1, sambil mencatat kepekaan model di sepanjang jalan. Komputer hanya bisa mencuplik di beberapa titik. Masalahnya: di dalam XLS-R, hampir seluruh perubahan skor terjadi di awal sekali.</p>
+
+    <div class="rig">
+      <div class="rig-head">
+        <div class="readout">
+          <div><div class="v mono" id="resid">—</div><div class="k">sisa kesalahan</div></div>
+          <div><div class="v mono" id="captured">—</div><div class="k">perubahan tertangkap</div></div>
+        </div>
+        <div class="toggle" role="group" aria-label="Cara menempatkan titik cuplikan">
+          <button id="tUni" aria-pressed="true">Titik merata</button>
+          <button id="tAda" aria-pressed="false">Titik adaptif</button>
+        </div>
+      </div>
+      <svg id="quad" viewBox="0 0 640 220" role="img" aria-label="Kepekaan model sepanjang jalur, dengan titik cuplikan ditandai"></svg>
+      <div class="slider-row">
+        <label for="nodes">Jumlah titik cuplikan: <span class="mono" id="nodeVal">32</span></label>
+        <input type="range" id="nodes" min="8" max="256" step="8" value="32">
+      </div>
+      <p class="note">Ilustrasi mekanismenya, bukan data rekaman. Sumbu mendatar skala logaritmik: separuh kiri grafik ini hanya mencakup 1% pertama perjalanan. Geser ke “titik adaptif” untuk melihat perbedaannya.</p>
+    </div>
+
+    <p class="col">Pada data sebenarnya, dampaknya besar. Dengan aturan 32 titik tetap, hanya <strong>36 dari 1.000</strong> rekaman memenuhi syarat completeness. Dengan kuadratur adaptif, <strong>998 dari 1.000</strong>. Semua angka di paper harus dihitung ulang setelah perbaikan ini.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="kicker">07 · Kenapa hasil nol ini bisa dipercaya</span><h2>Alat ukurnya dibuktikan dulu bisa menemukan</h2></div>
+    <p>Mengatakan “kami tidak menemukan apa-apa” itu murah. Bisa jadi memang tidak ada, bisa jadi alat ukurnya tumpul. Jadi prosedur yang persis sama dijalankan pada kasus yang <em>seharusnya</em> menunjukkan kesesuaian.</p>
+    <div class="panel bars" id="ctrlBars"></div>
+    <p>Tiga baris pertama membandingkan dua sudut pandang atas <em>satu</em> representasi — di situ kesesuaiannya nyata, dan prosedurnya menemukannya dengan mudah. Baris terakhir membandingkan dua representasi berbeda. Jadi ketiadaan itu sifat datanya, bukan sifat alat ukurnya.</p>
+    <p>Dua pengujian lain menutup celahnya. Kesesuaian buatan yang disuntikkan ke 5% rekaman <strong>terdeteksi</strong>, pada 2% tidak — cocok dengan hitungan daya uji: efek di atas <strong>2,7 poin persentase</strong> pasti terlihat. Dan karena kedua sisi punya kebiasaan melabeli yang berbeda, kesesuaian 100% mustahil secara matematis; batas tertingginya <strong>43,67%</strong>, dan pada 5 dari 16 kelompok hasilnya sudah menyentuh batas itu.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="kicker">08 · Batasnya</span><h2>Yang tidak dikatakan paper ini</h2></div>
+    <ul>
+      <li><strong>Bukan</strong> bahwa kedua model memakai mekanisme akustik berbeda. Yang dibandingkan adalah label konsep di bawah satu pemetaan buatan peneliti.</li>
+      <li><strong>Bukan</strong> bahwa salah satu metode penjelasan lebih benar. Tidak ada kunci jawaban untuk dibandingkan.</li>
+      <li><strong>Bukan</strong> apa-apa tentang penutur baru. Data dibagi per-ucapan, bukan per-penutur.</li>
+      <li><strong>Bukan</strong> bahwa perbedaan antar korpus disebabkan dialek. Keempatnya juga berbeda dalam perekaman, aktor, dan protokol.</li>
+      <li><strong>Bukan</strong> bahwa IG atau SHAP tidak bisa dipercaya secara umum. Satu cara menjalankan IG gagal memenuhi syaratnya sendiri, dan itu bisa diperbaiki.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="kicker">09 · Kamus</span><h2>Istilah yang muncul di paper</h2></div>
+    <div>
+      <details><summary>eGeMAPS</summary><p>Daftar baku 88 angka yang merangkum satu rekaman: rata-rata nada, seberapa keras, seberapa serak, berapa potongan bersuara per detik. Kalau rekaman adalah wajah, ini “tinggi badan, berat badan, lingkar kepala”.</p></details>
+      <details><summary>Frozen encoder + linear probe</summary><p>Parameter XLS-R dibekukan, tidak diubah sama sekali. Yang dilatih hanya satu lapisan kecil di ujungnya. Konsekuensinya: penjelasan yang dihasilkan menggambarkan lapisan kecil itu, bukan XLS-R secara umum.</p></details>
+      <details><summary>SHAP dan TreeSHAP</summary><p>Berasal dari teori permainan: cara adil membagi hadiah tim ke tiap anggota, dengan merata-ratakan seberapa besar hadiah bertambah saat orang itu bergabung, di semua urutan yang mungkin. Di sini “anggota tim” adalah 88 descriptor. TreeSHAP adalah jalan pintas yang tepat untuk model berbasis pohon.</p></details>
+      <details><summary>Integrated Gradients</summary><p>Mulai dari keheningan, naikkan perlahan sampai rekaman utuh, sambil mencatat kepekaan skor di tiap titik waktu. Jumlahkan sepanjang perjalanan itu.</p></details>
+      <details><summary>Completeness</summary><p>Jaminan bahwa semua atribusi IG dijumlahkan harus persis sama dengan selisih skor. Kalau tidak terpenuhi, ada bagian keputusan yang tidak terhitung di mana pun.</p></details>
+      <details><summary>Uji permutasi dan hipotesis nol</summary><p>Acak datanya dengan sengaja, berkali-kali, lalu lihat nilai apa yang muncul dari keacakan itu. Itulah acuan “kebetulan belaka”. Demo di bagian 04 menjalankannya.</p></details>
+      <details><summary>Nilai p</summary><p>Peluang mendapat hasil seekstrem yang diamati seandainya tidak ada hubungan apa pun. Di sini 0,9586 — sangat konsisten dengan kebetulan.</p></details>
+      <details><summary>Minimum detectable effect</summary><p>Efek terkecil yang bisa ditangkap rancangan penelitian ini. Di sini 2,7 poin persentase. Ini mengubah “kami tidak menemukan” menjadi “apa pun di atas 2,7 poin pasti terlihat, dan tidak ada”.</p></details>
+      <details><summary>Kontrol positif</summary><p>Pengujian yang harus memberi hasil positif. Sebelum menyimpulkan “tidak ada emas di sungai ini”, pastikan detektor Anda berbunyi saat didekatkan ke cincin emas.</p></details>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <p>Panduan ini menjelaskan paper <em>Reliable Explainability Across Four Arabic Speech Emotion Corpora: A Null-Controlled Cross-Representation Comparison</em>. Angka-angkanya diambil dari naskah; demo di bagian 04 berjalan pada 996 pasangan label yang sama dengan analisis aslinya.</p>
+</div></footer>
+
+<script>
+(function(){
+  "use strict";
+  var D = {"strata":["ERDMA Angry","ERDMA Happy","ERDMA Neutral","ERDMA Sad","KEDAS Angry","KEDAS Happy","KEDAS Neutral","KEDAS Sad","SAUDI Angry","SAUDI Happy","SAUDI Neutral","SAUDI Sad","YSED Angry","YSED Happy","YSED Neutral","YSED Sad"],"s":"0000000000000000000000000000000000000000000000001111111111111111111111111111111111111111111222222222222222222222222222222222222222222222222222333333333333333333333333333333333333333333333333333344444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444455555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555566666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777888888888899999aaaaabbbbbcccccccccccccccccccccccccccccccccccccccccccddddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefffffffffffffffffffffffffffffffffffffffffffff","a":"200222000200222220022000222220022222220202222222022222222202222221120222122121111110000000022222220220002000002000000222220000000000000000000022220102222222222222022222222000200000000200102122102202222222322222223322232322222202232332323202222323222220332223220222222222233032220322220202220022202333232022322233232222222222302202222222202222322222223213212332232222122313222322222202222332222223032232222303232322332202322233223230222233322223210212233321222222322032032323222220223232222222223232333333231333223223332323201330223322330332322323212132230321333331313113033123333013323030231002323222331331333233222233222303032032233333313231330033103123331113111031313131313131333301301313133100333010030133301132333313303333133333333133123331033111311233131011132213131313111201031003320011311111111100020211111100000000000000000000000000000000000000000000000121111100111110110111101101111111110011010110000000000000000010000000100000000000000000000000000000111010000000000001101100000011001000","b":"311112111203312310213121111201120321130131011313111111011331131111332011211011111113333331011111111111131311311120111101111113121131111113011131111131121101111111101130111312211111111111131113321213303230101020031321033231233301003133101010131201000110021030123223232011011311111111310100111111011103110110213313031230000000101201301013103211001011110113113310021100221332333202030000001110313000131001203210101211300001310130013031102131110110011033231103131210000110131310110331133102113110133110303301010112300130100033033013331201031233313320023030131230033121111310113101113300111301111100303312303010333000302112013310310110101111021223031200130002330333300110023000001033310011303310011021013032032000133030000000130110331111301313123000311032200031013000111113320131313122110120011031310211100203020101133001011111331131201113112111321212121113111111131111103113111033031111131111111111111111131111111013111231101111111113121211111111111310311110313111111111111131131111111311011111131111"};
+  var d36 = function(s){ var a=new Uint8Array(s.length); for(var i=0;i<s.length;i++) a[i]=parseInt(s[i],36); return a; };
+  var S=d36(D.s), A=d36(D.a), B=d36(D.b), N=S.length;
+  var OBS = 197/N*100;
+
+  // group row indices by stratum
+  var groups={}; for(var i=0;i<N;i++){ (groups[S[i]]=groups[S[i]]||[]).push(i); }
+  var G=Object.keys(groups).map(function(k){return groups[k];});
+
+  var samples=[], sum=0, beat=0;
+  function oneShuffle(){
+    var m=0;
+    for(var g=0;g<G.length;g++){
+      var idx=G[g], L=idx.length;
+      var perm=new Int32Array(L); for(var j=0;j<L;j++) perm[j]=idx[j];
+      for(var j2=L-1;j2>0;j2--){ var r=(Math.random()*(j2+1))|0; var t=perm[j2]; perm[j2]=perm[r]; perm[r]=t; }
+      for(var j3=0;j3<L;j3++){ if(A[idx[j3]]===B[perm[j3]]) m++; }
+    }
+    return m/N*100;
+  }
+  function run(k){
+    for(var i=0;i<k;i++){ var v=oneShuffle(); samples.push(v); sum+=v; if(v>=OBS-1e-9) beat++; }
+    draw();
+  }
+  function reset(){ samples=[]; sum=0; beat=0; draw(); }
+
+  var fmt=function(x,n){ return x.toFixed(n===undefined?2:n).replace('.',','); };
+  var BIN=0.4, LO=14, HI=27;
+  var hist=document.getElementById('hist');
+
+  function draw(){
+    document.getElementById('runCount').textContent = samples.length;
+    document.getElementById('nullMean').textContent = samples.length? fmt(sum/samples.length)+'%' : '—';
+    document.getElementById('beatCount').textContent = samples.length? beat : '—';
+
+    var nb=Math.round((HI-LO)/BIN), c=new Array(nb).fill(0), mx=1;
+    for(var i=0;i<samples.length;i++){
+      var b=Math.floor((samples[i]-LO)/BIN); if(b>=0&&b<nb){ c[b]++; if(c[b]>mx) mx=c[b]; }
+    }
+    var W=640,H=230,L=34,R=10,T=14,Bm=30, pw=W-L-R, ph=H-T-Bm;
+    var x=function(v){ return L + (v-LO)/(HI-LO)*pw; };
+    var s=['<rect x="0" y="0" width="640" height="230" fill="none"/>'];
+    // axis
+    s.push('<line x1="'+L+'" y1="'+(T+ph)+'" x2="'+(W-R)+'" y2="'+(T+ph)+'" stroke="var(--line)" stroke-width="1"/>');
+    for(var v=16;v<=26;v+=2){
+      s.push('<line x1="'+x(v).toFixed(1)+'" y1="'+(T+ph)+'" x2="'+x(v).toFixed(1)+'" y2="'+(T+ph+4)+'" stroke="var(--line)" stroke-width="1"/>');
+      s.push('<text class="axis" x="'+x(v).toFixed(1)+'" y="'+(T+ph+16)+'" text-anchor="middle">'+v+'%</text>');
+    }
+    s.push('<text class="axis" x="'+L+'" y="'+(T+ph+27)+'">kesesuaian setelah pasangan diacak</text>');
+    // bars
+    var bw=pw/nb;
+    for(var k=0;k<nb;k++){
+      if(!c[k]) continue;
+      var h=c[k]/mx*ph, xx=L+k*bw;
+      s.push('<rect x="'+xx.toFixed(1)+'" y="'+(T+ph-h).toFixed(1)+'" width="'+Math.max(bw-1,1).toFixed(1)+'" height="'+h.toFixed(1)+'" fill="var(--blue)" opacity="0.55"/>');
+    }
+    // observed marker
+    var ox=x(OBS);
+    s.push('<line x1="'+ox.toFixed(1)+'" y1="'+T+'" x2="'+ox.toFixed(1)+'" y2="'+(T+ph)+'" stroke="var(--accent)" stroke-width="2"/>');
+    s.push('<line x1="'+(W-R-96)+'" y1="'+(T+6)+'" x2="'+(W-R-86)+'" y2="'+(T+6)+'" stroke="var(--accent)" stroke-width="2"/>');
+    s.push('<text class="axis" x="'+(W-R-80)+'" y="'+(T+9)+'" fill="var(--accent)">teramati 19,78%</text>');
+    hist.innerHTML=s.join('');
+  }
+
+  document.getElementById('b1').onclick=function(){ run(1); };
+  document.getElementById('b200').onclick=function(){ run(200); };
+  document.getElementById('bReset').onclick=reset;
+
+  /* ---------- quadrature illustration ---------- */
+  var TAU=0.004;                       // 95% of the score change inside the first ~1.2%
+  var dF=function(a){ return Math.exp(-a/TAU)/TAU; };   // integrates to ~1 over [0,1]
+  var adaptive=false;
+  var quad=document.getElementById('quad');
+
+  function nodesFor(n){
+    var out=[],i;
+    if(adaptive){ var lo=Math.log(1e-6), hi=Math.log(1);
+      for(i=0;i<n;i++) out.push(Math.exp(lo+(hi-lo)*(i+0.5)/n));
+    } else { for(i=0;i<n;i++) out.push((i+0.5)/n); }
+    return out;
+  }
+  function estimate(n){
+    var i,acc=0;
+    if(adaptive){ var lo=Math.log(1e-6), hi=Math.log(1);
+      for(i=0;i<n;i++){ var a=Math.exp(lo+(hi-lo)*(i+0.5)/n); acc+=dF(a)*a*(hi-lo)/n; }
+    } else { for(i=0;i<n;i++) acc+=dF((i+0.5)/n)/n; }
+    return acc;
+  }
+  function drawQuad(){
+    var n=+document.getElementById('nodes').value;
+    document.getElementById('nodeVal').textContent=n;
+    var est=estimate(n), truth=1-Math.exp(-1/TAU);
+    var res=Math.abs(est-truth);
+    document.getElementById('resid').textContent = res<0.001? '< 0,001' : fmt(res,3);
+    document.getElementById('captured').textContent = fmt(Math.min(est/truth,1)*100,1)+'%';
+
+    var W=640,H=220,L=40,R=12,T=14,Bm=32, pw=W-L-R, ph=H-T-Bm;
+    var lo=Math.log10(1e-5), hi=Math.log10(1);
+    var X=function(a){ return L + (Math.log10(Math.max(a,1e-5))-lo)/(hi-lo)*pw; };
+    var mxY=dF(0), Y=function(v){ return T+ph - Math.min(v/mxY,1)*ph; };
+    var s=[], i, pts=[];
+    for(i=0;i<=260;i++){ var a=Math.pow(10, lo+(hi-lo)*i/260); pts.push(X(a).toFixed(1)+','+Y(dF(a)).toFixed(1)); }
+    s.push('<line x1="'+L+'" y1="'+(T+ph)+'" x2="'+(W-R)+'" y2="'+(T+ph)+'" stroke="var(--line)" stroke-width="1"/>');
+    var ticks=[[1e-5,'0,001%'],[1e-4,'0,01%'],[1e-3,'0,1%'],[1e-2,'1%'],[1e-1,'10%'],[1,'100%']];
+    for(i=0;i<ticks.length;i++){
+      var tx=X(ticks[i][0]);
+      s.push('<line x1="'+tx.toFixed(1)+'" y1="'+(T+ph)+'" x2="'+tx.toFixed(1)+'" y2="'+(T+ph+4)+'" stroke="var(--line)"/>');
+      s.push('<text class="axis" x="'+tx.toFixed(1)+'" y="'+(T+ph+16)+'" text-anchor="middle">'+ticks[i][1]+'</text>');
+    }
+    s.push('<text class="axis" x="'+L+'" y="'+(T+ph+28)+'">posisi tombol volume (skala logaritmik)</text>');
+    s.push('<polyline points="'+pts.join(' ')+'" fill="none" stroke="var(--blue)" stroke-width="2"/>');
+    var nd=nodesFor(n), shown=0;
+    for(i=0;i<nd.length;i++){
+      if(nd[i]<1e-5) continue;
+      shown++;
+      s.push('<circle cx="'+X(nd[i]).toFixed(1)+'" cy="'+(T+ph).toFixed(1)+'" r="2.6" fill="var(--accent)"/>');
+    }
+    s.push('<text class="axis" x="'+(W-R)+'" y="'+(T+10)+'" text-anchor="end" fill="var(--ink-faint)">kepekaan model</text>');
+    quad.innerHTML=s.join('');
+  }
+  document.getElementById('nodes').oninput=drawQuad;
+  document.getElementById('tUni').onclick=function(){ adaptive=false; this.setAttribute('aria-pressed','true'); document.getElementById('tAda').setAttribute('aria-pressed','false'); drawQuad(); };
+  document.getElementById('tAda').onclick=function(){ adaptive=true; this.setAttribute('aria-pressed','true'); document.getElementById('tUni').setAttribute('aria-pressed','false'); drawQuad(); };
+
+  /* ---------- positive-control bars ---------- */
+  var CT=[['IG 20 bin vs IG 30 bin',77.95,38.92,true],
+          ['IG 20 bin vs IG 10 bin',66.37,36.88,true],
+          ['TreeSHAP dibelah dua',41.77,36.44,true],
+          ['TreeSHAP vs IG',19.78,19.87,false]];
+  var bs=[];
+  for(var i=0;i<CT.length;i++){
+    var r=CT[i], col=r[3]?'var(--accent)':'var(--blue)';
+    bs.push('<div class="barrow"><div class="barlab">'+r[0]
+      +'<div class="bartrack"><div class="barfill" style="width:'+r[1]+'%;background:'+col+'"></div></div>'
+      +'<div class="bartrack" style="margin-top:3px"><div class="barfill" style="width:'+r[2]+'%;background:var(--ink-faint)"></div></div>'
+      +'</div><div class="barval">'+fmt(r[1],1)+'%</div></div>');
+  }
+  bs.push('<p class="note">Batang berwarna: kesesuaian teramati. Batang abu-abu di bawahnya: kesesuaian kebetulan.</p>');
+  document.getElementById('ctrlBars').innerHTML=bs.join('');
+
+  run(300);
+  drawQuad();
+})();
+</script>

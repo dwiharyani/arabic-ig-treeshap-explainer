@@ -1,0 +1,541 @@
+<title>Two Explainers, One Recording</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+/* Layout: one reading column; every instrument breaks out wider, like apparatus inset in a notebook. */
+:root{
+  --bg:#F5F7FA; --surface:#FFFFFF; --sunk:#EDF1F6;
+  --ink:#15293F; --ink-soft:#5A6E85; --ink-faint:#8A9BAE;
+  --line:#DBE3EC; --line-soft:#E9EEF4;
+  --accent:#C2185B; --accent-soft:#FBEDF3;
+  --blue:#3C6EA5; --blue-soft:#E8F0F9;
+  --good:#2E7D5B; --good-soft:#E6F2EC;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0E141C; --surface:#151D27; --sunk:#111922;
+  --ink:#E7EDF4; --ink-soft:#9FB0C2; --ink-faint:#71849A;
+  --line:#26323F; --line-soft:#1D2731;
+  --accent:#F28BB2; --accent-soft:#2C1A23;
+  --blue:#84ACDC; --blue-soft:#17222F;
+  --good:#5FBE93; --good-soft:#15251E;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0E141C; --surface:#151D27; --sunk:#111922;
+  --ink:#E7EDF4; --ink-soft:#9FB0C2; --ink-faint:#71849A;
+  --line:#26323F; --line-soft:#1D2731;
+  --accent:#F28BB2; --accent-soft:#2C1A23;
+  --blue:#84ACDC; --blue-soft:#17222F;
+  --good:#5FBE93; --good-soft:#15251E;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.62;margin:0}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+.wide{max-width:980px}
+.col{max-width:720px;width:100%;align-self:center}
+h1,h2,h3,.kicker,button,label,th,.barval,.readout .k,.readout .v{font-family:var(--display)}
+h1{font-size:clamp(2rem,6vw,3.1rem);line-height:1.04;font-weight:700;letter-spacing:-.02em;text-wrap:balance;margin:0 0 .5rem}
+h2{font-size:clamp(1.35rem,3.4vw,1.75rem);font-weight:700;letter-spacing:-.015em;line-height:1.2;text-wrap:balance;margin:0}
+h3{font-size:1.02rem;font-weight:700;margin:0}
+p{margin:0}
+a{color:var(--accent)}
+.kicker{font-family:var(--mono);font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.sub{color:var(--ink-soft)}
+.small{font-size:.86rem;line-height:1.5}
+
+.hero{margin-top:calc(-1 * env(safe-area-inset-top,0px));padding-top:calc(env(safe-area-inset-top,0px) + 3.2rem);padding-bottom:2.6rem;background:var(--surface);border-bottom:1px solid var(--line)}
+.hero .wrap{display:flex;flex-direction:column;gap:1rem}
+.lede{font-size:1.1rem;color:var(--ink-soft);max-width:34em}
+.scoreline{display:flex;flex-wrap:wrap;gap:1.6rem;margin-top:.6rem;padding-top:1.2rem;border-top:1px solid var(--line-soft)}
+.score{display:flex;flex-direction:column;gap:.1rem;min-width:0}
+.score .v{font-family:var(--mono);font-size:1.6rem;font-weight:600;letter-spacing:-.02em;line-height:1}
+.score .k{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+.v-obs{color:var(--accent)} .v-null{color:var(--blue)}
+
+section{padding-block:2.6rem;border-bottom:1px solid var(--line-soft)}
+section .wrap{display:flex;flex-direction:column;gap:1.05rem}
+.sechead{display:flex;flex-direction:column;gap:.3rem}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:1.1rem 1.15rem;display:flex;flex-direction:column;gap:.6rem}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:.85rem}
+.two > *{min-width:0}
+.branch-h{display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap}
+.tag{font-family:var(--mono);font-size:.62rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .45rem;border-radius:2px}
+.tag.b{background:var(--blue-soft);color:var(--blue)}
+.tag.a{background:var(--accent-soft);color:var(--accent)}
+.chain{font-family:var(--mono);font-size:.82rem;line-height:1.8}
+.chain i{color:var(--ink-faint);font-style:normal;padding:0 .2em}
+
+.tbl{width:100%;border-collapse:collapse;font-size:.88rem}
+.tbl th{font-size:.66rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);text-align:left;padding:0 .55rem .4rem 0;border-bottom:1px solid var(--line)}
+.tbl td{padding:.42rem .55rem .42rem 0;border-bottom:1px solid var(--line-soft);vertical-align:top}
+.tbl td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;padding-right:1rem}
+.scroller{overflow-x:auto}
+
+.rig{background:var(--sunk);border:1px solid var(--line);border-radius:3px;padding:1.05rem;display:flex;flex-direction:column;gap:.9rem}
+.rig-head{display:flex;justify-content:space-between;align-items:baseline;gap:.8rem;flex-wrap:wrap}
+.readout{display:flex;flex-wrap:wrap;gap:1.3rem}
+.readout .v{font-family:var(--mono);font-size:1.3rem;font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums}
+.readout .k{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+.ctrls{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+button{font-family:var(--display);font-size:.84rem;font-weight:700;color:var(--surface);background:var(--ink);border:1px solid var(--ink);border-radius:2px;padding:.46rem .85rem;cursor:pointer}
+button.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+button:hover{opacity:.88}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+svg{display:block;width:100%;height:auto;max-width:100%}
+.axis{font-family:var(--mono);font-size:8.5px;fill:var(--ink-faint)}
+.note{font-size:.8rem;color:var(--ink-faint);line-height:1.5}
+input[type=range]{width:100%;accent-color:var(--accent)}
+.slider-row{display:flex;flex-direction:column;gap:.3rem}
+.slider-row label{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+.toggle{display:flex;border:1px solid var(--line);border-radius:2px;overflow:hidden;width:fit-content}
+.toggle button{border:0;border-radius:0;background:transparent;color:var(--ink-soft);font-size:.78rem;padding:.4rem .7rem}
+.toggle button[aria-pressed=true]{background:var(--ink);color:var(--surface)}
+
+/* recording card */
+.rec{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.8rem}
+.rec > div{min-width:0}
+.reccell{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:.75rem .85rem;display:flex;flex-direction:column;gap:.25rem}
+.reccell .k{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+.reccell .v{font-family:var(--display);font-weight:700;font-size:1.02rem;line-height:1.25}
+.verdict{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--mono);font-size:.74rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.28rem .6rem;border-radius:2px}
+.verdict.no{background:var(--accent-soft);color:var(--accent)}
+.verdict.yes{background:var(--good-soft);color:var(--good)}
+
+.bars{display:flex;flex-direction:column;gap:.55rem}
+.barrow{display:grid;grid-template-columns:minmax(0,1fr) 3.4rem;gap:.6rem;align-items:center}
+.barlab{font-size:.84rem;min-width:0}
+.bartrack{height:9px;background:var(--line-soft);border-radius:1px;overflow:hidden;margin-top:.22rem}
+.barfill{height:100%}
+.barval{font-size:.82rem;text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono)}
+
+ul{margin:0;padding-left:1.1rem;display:flex;flex-direction:column;gap:.45rem}
+li::marker{color:var(--accent)}
+details{border-top:1px solid var(--line-soft);padding-block:.7rem}
+details summary{cursor:pointer;font-family:var(--display);font-weight:700;font-size:.95rem;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"+";color:var(--accent);font-family:var(--mono);margin-right:.5rem}
+details[open] summary::before{content:"\2212"}
+details p{margin-top:.5rem;font-size:.93rem;color:var(--ink-soft)}
+footer{padding-block:2.2rem 3rem;color:var(--ink-faint);font-size:.82rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+.langsw{position:fixed;top:12px;right:14px;z-index:50;font-family:var(--display);font-size:.78rem;font-weight:700;
+  text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);
+  border-radius:2px;padding:.34rem .6rem}
+.langsw:hover{border-color:var(--accent);color:var(--accent)}
+@media (max-width:600px){.langsw{top:8px;right:8px;font-size:.72rem;padding:.28rem .5rem}}
+</style>
+
+<a class="langsw" href="id.html">Bahasa Indonesia</a>
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">A reader's guide</span>
+    <h1>Two explainers look at the same recording</h1>
+    <p class="lede">Two programs guess the emotion in Arabic speech. Both are often right. The question is not which is more accurate — it is whether they point at the same part of the sound as their reason.</p>
+    <div class="scoreline">
+      <div class="score"><span class="v v-obs mono">19.78%</span><span class="k">observed agreement</span></div>
+      <div class="score"><span class="v v-null mono">19.87%</span><span class="k">agreement by chance</span></div>
+      <div class="score"><span class="v mono">996</span><span class="k">paired recordings</span></div>
+    </div>
+    <p class="note">Every number on this page is computed in your browser from the same 996 label pairs the paper analysed. Nothing is hard-coded except the text.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="kicker">01 · The question</span><h2>Two doctors, one patient</h2></div>
+    <p>Two doctors examine the same patient. Both conclude “this person has a fever.” Asked why, the first says “their temperature is 39 degrees,” the second says “their face is flushed and they are shivering.” Same conclusion; different <em>evidence</em>.</p>
+    <p>This paper runs that test on machines. If two equally accurate AI systems point at different things, then the explanation a system gives may say more about how it was built than about the speech itself.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="kicker">02 · The material</span><h2>Two ways of describing the same sound</h2></div>
+    <p>Four Arabic corpora — SAUDI, YSED, ERDMA, KEDAS — supply 1,000 locked-test recordings that were never used for training. Each recording goes down two paths at once.</p>
+    <div class="two">
+      <div class="panel">
+        <div class="branch-h"><span class="tag b">Path A</span><h3>Summary numbers</h3></div>
+        <p class="chain">88 eGeMAPS numbers <i>→</i> CatBoost <i>→</i> TreeSHAP</p>
+        <p class="small sub">The recording is reduced to 88 measurements: average pitch, loudness, breathiness. TreeSHAP then answers <strong>which property</strong> pushed hardest.</p>
+        <p class="note">This summary throws away <em>when</em> anything happened.</p>
+      </div>
+      <div class="panel">
+        <div class="branch-h"><span class="tag a">Path B</span><h3>The raw waveform</h3></div>
+        <p class="chain">Raw waveform <i>→</i> XLS-R 300M <i>→</i> Integrated Gradients</p>
+        <p class="small sub">The recording goes in as it is, 16,000 numbers per second. Integrated Gradients answers <strong>which moments</strong> pushed hardest.</p>
+        <p class="note">This map does not know which acoustic property lives at those moments.</p>
+      </div>
+    </div>
+    <p>Here is the difficulty: path A answers <em>which property</em>, path B answers <em>when</em>. They cannot be compared directly — so the paper builds a bridge.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap wide">
+    <div class="sechead col"><span class="kicker">03 · The bridge</span><h2>Four concepts both sides can name</h2></div>
+    <div class="scroller col"><table class="tbl">
+      <thead><tr><th>Concept</th><th>TreeSHAP side</th><th class="n">Count</th><th>IG side</th></tr></thead>
+      <tbody>
+        <tr><td>Loudness change</td><td class="sub">loudness descriptors</td><td class="n">12</td><td class="sub">moments loudness shifts</td></tr>
+        <tr><td>Pitch movement</td><td class="sub">pitch descriptors</td><td class="n">10</td><td class="sub">moments pitch moves</td></tr>
+        <tr><td>Spectral change</td><td class="sub">spectral descriptors</td><td class="n">12</td><td class="sub">moments timbre shifts</td></tr>
+        <tr><td>Voicing transition</td><td class="sub">voicing descriptors</td><td class="n">5</td><td class="sub">voiced/unvoiced switches</td></tr>
+      </tbody>
+    </table></div>
+    <p class="col">Each side picks the single most dominant concept for each recording. Then the question is simply: <strong>are the two picks the same?</strong> Draw a real recording and see for yourself.</p>
+
+    <div class="rig">
+      <div class="rig-head">
+        <h3 id="recTitle">A recording from the study</h3>
+        <span class="verdict no" id="recVerdict">—</span>
+      </div>
+      <div class="rec">
+        <div class="reccell"><span class="k">Corpus</span><span class="v" id="recCorpus">—</span></div>
+        <div class="reccell"><span class="k">True emotion</span><span class="v" id="recEmotion">—</span></div>
+        <div class="reccell" style="border-color:var(--blue)"><span class="k">TreeSHAP picked</span><span class="v" id="recShap" style="color:var(--blue)">—</span></div>
+        <div class="reccell" style="border-color:var(--accent)"><span class="k">IG picked</span><span class="v" id="recIg" style="color:var(--accent)">—</span></div>
+      </div>
+      <div class="ctrls">
+        <button id="recDraw">Draw another recording</button>
+        <button id="recDraw10" class="ghost">Draw 10 and tally</button>
+        <span class="small sub mono" id="recTally"></span>
+      </div>
+      <p class="note">Real rows from the study's 996 paired recordings. Both models predicted this recording's emotion correctly — the disagreement is about the reason, not the answer.</p>
+    </div>
+    <p class="note col">The four concepts are operational proxies designed by the researchers, not validated acoustic equivalents. The paper says so repeatedly.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap wide">
+    <div class="sechead col"><span class="kicker">04 · The instrument</span><h2>How much agreement does pure chance produce?</h2></div>
+    <p class="col">The two sides agree on 197 of 996 recordings — 19.78%. That number alone means nothing. Two labellers with no relationship at all still agree fairly often, simply out of habit.</p>
+    <p class="col">So destroy <em>one</em> thing: the pairing. Take one recording's TreeSHAP label and pair it with another recording's IG label, from the same corpus and the same emotion. Everything else stays intact. The button below runs exactly that, on the real data.</p>
+
+    <div class="rig">
+      <div class="readout">
+        <div><div class="v v-obs mono">19.78%</div><div class="k">observed</div></div>
+        <div><div class="v v-null mono" id="nullMean">—</div><div class="k">shuffled mean</div></div>
+        <div><div class="v mono" id="runCount">0</div><div class="k">shuffles</div></div>
+        <div><div class="v mono" id="beatCount">—</div><div class="k">p value (two-sided)</div></div>
+      </div>
+      <svg id="hist" viewBox="0 0 640 230" role="img" aria-label="Distribution of agreement under shuffling, with the observed value marked"></svg>
+      <div class="ctrls">
+        <button id="b1">Shuffle once</button>
+        <button id="b200" class="ghost">Shuffle 200×</button>
+        <button id="bReset" class="ghost">Start over</button>
+      </div>
+      <p class="note">Each shuffle re-pairs the IG labels <em>within</em> each corpus × emotion group, using the same 996 label pairs the paper used. The pink line is the real agreement.</p>
+    </div>
+    <p class="col">Watch where the pink line falls: in the middle of the pile. The p value above counts how often pure chance lands at least as far from the shuffled mean as the real value does — and the answer is almost always. With 20,000 shuffles the paper reports <span class="mono">p = 0.9586</span>; a few hundred shuffles here already lands in the same neighbourhood.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap wide">
+    <div class="sechead col"><span class="kicker">05 · Could it have found anything?</span><h2>Plant agreement on purpose, then look for it</h2></div>
+    <p class="col">A null result is only worth something if the test could have detected a real effect. So plant one. The slider copies the TreeSHAP label onto the IG side for a chosen share of recordings — manufacturing agreement that is definitely there — and then runs the same test.</p>
+
+    <div class="rig">
+      <div class="readout">
+        <div><div class="v v-obs mono" id="injObs">—</div><div class="k">observed</div></div>
+        <div><div class="v v-null mono" id="injNull">—</div><div class="k">shuffled mean</div></div>
+        <div><div class="v mono" id="injExc">—</div><div class="k">excess</div></div>
+        <div><div class="v mono" id="injVerdict">—</div><div class="k">detected?</div></div>
+      </div>
+      <svg id="injBar" viewBox="0 0 640 86" role="img" aria-label="Observed agreement against the shuffled reference at the chosen injection rate"></svg>
+      <div class="slider-row">
+        <label for="inj">Share of recordings given planted agreement: <span class="mono" id="injVal">0%</span></label>
+        <input type="range" id="inj" min="0" max="20" step="1" value="0">
+      </div>
+      <p class="note">Detection here means the excess clears the design's minimum detectable effect of 2.7 percentage points. Drag slowly from zero: nothing at 2%, and from about 5% onward the excess separates from the noise — which is what the paper reports.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap wide">
+    <div class="sechead col"><span class="kicker">06 · The scale</span><h2>Perfect agreement was never possible</h2></div>
+    <p class="col">The two sides have different labelling habits: TreeSHAP favours spectral change, IG favours pitch movement. When the two sets of habits differ, some recordings simply cannot match, no matter how good the method. The highest attainable agreement is fixed by those habits alone.</p>
+    <div class="rig">
+      <svg id="scale" viewBox="0 0 640 128" role="img" aria-label="Where observed agreement sits between the chance level and the attainable ceiling"></svg>
+      <div class="readout">
+        <div><div class="v mono" id="chanceV">—</div><div class="k">chance level</div></div>
+        <div><div class="v v-obs mono">19.78%</div><div class="k">observed</div></div>
+        <div><div class="v mono" id="ceilV">—</div><div class="k">attainable ceiling</div></div>
+      </div>
+      <p class="note">Both figures are computed here from the label counts in each of the 16 corpus × emotion groups, not copied from the paper. In 5 of those 16 groups the observed agreement already sits at the ceiling.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap wide">
+    <div class="sechead col"><span class="kicker">07 · The second finding</span><h2>Why the IG maps were broken</h2></div>
+    <p class="col">Integrated Gradients carries a guarantee called <strong>completeness</strong>: add up all the attributions and the total must equal the difference in score between the real recording and silence. If it does not, the map is not actually accounting for the model's decision.</p>
+    <p class="col">IG works by fading the recording up from silence, like turning a volume dial from 0 to 1, recording the model's sensitivity along the way. A computer can only sample a finite number of points. The problem: inside XLS-R, almost all of the score change happens at the very start.</p>
+
+    <div class="rig">
+      <div class="rig-head">
+        <div class="readout">
+          <div><div class="v mono" id="resid">—</div><div class="k">residual error</div></div>
+          <div><div class="v mono" id="captured">—</div><div class="k">change captured</div></div>
+        </div>
+        <div class="toggle" role="group" aria-label="How sample points are placed">
+          <button id="tUni" aria-pressed="true">Evenly spaced</button>
+          <button id="tAda" aria-pressed="false">Adaptive</button>
+        </div>
+      </div>
+      <svg id="quad" viewBox="0 0 640 220" role="img" aria-label="Model sensitivity along the path, with sample points marked"></svg>
+      <div class="slider-row">
+        <label for="nodes">Number of sample points: <span class="mono" id="nodeVal">32</span></label>
+        <input type="range" id="nodes" min="8" max="256" step="8" value="32">
+      </div>
+      <p class="note">An illustration of the mechanism, not recording data. The horizontal axis is logarithmic: the left half of this chart covers only the first 1% of the path. Switch to “Adaptive” to see the difference.</p>
+    </div>
+    <p class="col">On the real data the effect is large. Under a fixed 32-point rule only <strong>36 of 1,000</strong> recordings satisfied completeness. Under adaptive quadrature, <strong>998 of 1,000</strong>. Every number in the paper had to be recomputed afterwards.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="kicker">08 · Why this null is trustworthy</span><h2>The instrument was shown to work first</h2></div>
+    <p>Saying “we found nothing” is cheap. Maybe there is nothing; maybe the instrument is blunt. So the identical procedure was run on cases that <em>should</em> show agreement.</p>
+    <div class="panel bars" id="ctrlBars"></div>
+    <p>The first three rows compare two views of <em>one</em> representation — the agreement is real there, and the procedure finds it easily. The last row compares the two different representations. So the absence is a property of the data, not of the test.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="kicker">09 · The limits</span><h2>What the paper does not claim</h2></div>
+    <ul>
+      <li><strong>Not</strong> that the two models use different acoustic mechanisms. What is compared are concept labels under one researcher-designed mapping.</li>
+      <li><strong>Not</strong> that either explanation method is more correct. There is no ground truth to compare against.</li>
+      <li><strong>Not</strong> anything about unseen speakers. The data is split by utterance, not by speaker.</li>
+      <li><strong>Not</strong> that differences between corpora are caused by dialect. The four also differ in recording conditions, speakers and protocol.</li>
+      <li><strong>Not</strong> that IG or SHAP are untrustworthy in general. One way of running IG failed its own requirement, and that can be fixed.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sechead"><span class="kicker">10 · Glossary</span><h2>Terms that appear in the paper</h2></div>
+    <div>
+      <details><summary>eGeMAPS</summary><p>A standard list of 88 numbers summarising one recording: average pitch, loudness, breathiness, voiced segments per second. If a recording were a face, these would be height, weight and head circumference.</p></details>
+      <details><summary>Frozen encoder + linear probe</summary><p>XLS-R's parameters are frozen, never modified. Only a small layer at the end is trained. The consequence: the explanations describe that small layer, not XLS-R in general.</p></details>
+      <details><summary>SHAP and TreeSHAP</summary><p>From game theory: how to divide a team's winnings fairly, by averaging how much the prize grows when each member joins, across every possible joining order. Here the team members are the 88 descriptors. TreeSHAP is an exact shortcut for tree models.</p></details>
+      <details><summary>Integrated Gradients</summary><p>Start from silence, fade up to the real recording, and record the model's sensitivity at each moment along the way. Add it all up.</p></details>
+      <details><summary>Completeness</summary><p>The guarantee that all IG attributions must sum exactly to the score difference. If they do not, part of the decision is unexplained by anything in the map.</p></details>
+      <details><summary>Permutation test and the null hypothesis</summary><p>Scramble the data on purpose, many times, and see what values chance throws up. That is the reference for “mere chance.” Section 04 runs one live.</p></details>
+      <details><summary>p value</summary><p>The probability of a result at least this extreme if there were no relationship at all. Here 0.9586 — highly consistent with chance.</p></details>
+      <details><summary>Minimum detectable effect</summary><p>The smallest effect this design can catch. Here 2.7 percentage points. It turns “we found nothing” into “anything above 2.7 points would have been seen, and nothing was.” Section 05 demonstrates it.</p></details>
+      <details><summary>Positive control</summary><p>A test that must come out positive. Before concluding “there is no gold in this river,” check that your detector beeps against a gold ring.</p></details>
+      <details><summary>Attainable ceiling</summary><p>The highest agreement possible given the two sides' label frequencies. Section 06 computes it from the data: 43.67%, not 100%.</p></details>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">
+  <p>This guide explains the paper <em>Reliable Explainability Across Four Arabic Speech Emotion Corpora: A Null-Controlled Cross-Representation Comparison</em>. It adds no findings of its own. The interactive sections run on the study's own 996 label pairs, so the figures they display are recomputed rather than quoted.</p>
+</div></footer>
+
+<script>
+(function(){
+  "use strict";
+  var D = {"strata":["ERDMA Angry","ERDMA Happy","ERDMA Neutral","ERDMA Sad","KEDAS Angry","KEDAS Happy","KEDAS Neutral","KEDAS Sad","SAUDI Angry","SAUDI Happy","SAUDI Neutral","SAUDI Sad","YSED Angry","YSED Happy","YSED Neutral","YSED Sad"],"s":"0000000000000000000000000000000000000000000000001111111111111111111111111111111111111111111222222222222222222222222222222222222222222222222222333333333333333333333333333333333333333333333333333344444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444455555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555566666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777888888888899999aaaaabbbbbcccccccccccccccccccccccccccccccccccccccccccddddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefffffffffffffffffffffffffffffffffffffffffffff","a":"200222000200222220022000222220022222220202222222022222222202222221120222122121111110000000022222220220002000002000000222220000000000000000000022220102222222222222022222222000200000000200102122102202222222322222223322232322222202232332323202222323222220332223220222222222233032220322220202220022202333232022322233232222222222302202222222202222322222223213212332232222122313222322222202222332222223032232222303232322332202322233223230222233322223210212233321222222322032032323222220223232222222223232333333231333223223332323201330223322330332322323212132230321333331313113033123333013323030231002323222331331333233222233222303032032233333313231330033103123331113111031313131313131333301301313133100333010030133301132333313303333133333333133123331033111311233131011132213131313111201031003320011311111111100020211111100000000000000000000000000000000000000000000000121111100111110110111101101111111110011010110000000000000000010000000100000000000000000000000000000111010000000000001101100000011001000","b":"311112111203312310213121111201120321130131011313111111011331131111332011211011111113333331011111111111131311311120111101111113121131111113011131111131121101111111101130111312211111111111131113321213303230101020031321033231233301003133101010131201000110021030123223232011011311111111310100111111011103110110213313031230000000101201301013103211001011110113113310021100221332333202030000001110313000131001203210101211300001310130013031102131110110011033231103131210000110131310110331133102113110133110303301010112300130100033033013331201031233313320023030131230033121111310113101113300111301111100303312303010333000302112013310310110101111021223031200130002330333300110023000001033310011303310011021013032032000133030000000130110331111301313123000311032200031013000111113320131313122110120011031310211100203020101133001011111331131201113112111321212121113111111131111103113111033031111131111111111111111131111111013111231101111111113121211111111111310311110313111111111111131131111111311011111131111"};
+  var CONCEPT=["Loudness change","Pitch movement","Spectral change","Voicing transition"];
+  var d36=function(s){var a=new Uint8Array(s.length);for(var i=0;i<s.length;i++)a[i]=parseInt(s[i],36);return a;};
+  var S=d36(D.s),A=d36(D.a),B=d36(D.b),N=S.length;
+  var OBS=197/N*100;
+  var fmt=function(x,n){return x.toFixed(n===undefined?2:n);};
+
+  var groups={};for(var i=0;i<N;i++){(groups[S[i]]=groups[S[i]]||[]).push(i);}
+  var G=Object.keys(groups).map(function(k){return groups[k];});
+
+  function shuffledRate(Bv){
+    var m=0;
+    for(var g=0;g<G.length;g++){
+      var idx=G[g],L=idx.length,perm=new Int32Array(L),j;
+      for(j=0;j<L;j++)perm[j]=idx[j];
+      for(j=L-1;j>0;j--){var r=(Math.random()*(j+1))|0,t=perm[j];perm[j]=perm[r];perm[r]=t;}
+      for(j=0;j<L;j++){if(A[idx[j]]===Bv[perm[j]])m++;}
+    }
+    return m/N*100;
+  }
+
+  /* ---- 03 recording explorer ---- */
+  var tally={n:0,m:0};
+  function drawRec(){
+    var i=(Math.random()*N)|0, parts=D.strata[S[i]].split(" ");
+    document.getElementById("recCorpus").textContent=parts[0];
+    document.getElementById("recEmotion").textContent=parts[1];
+    document.getElementById("recShap").textContent=CONCEPT[A[i]];
+    document.getElementById("recIg").textContent=CONCEPT[B[i]];
+    var same=A[i]===B[i], v=document.getElementById("recVerdict");
+    v.textContent=same?"same pick":"different pick";
+    v.className="verdict "+(same?"yes":"no");
+    tally.n++; if(same)tally.m++;
+    document.getElementById("recTally").textContent=tally.n>1?(tally.m+" of "+tally.n+" matched so far"):"";
+  }
+  document.getElementById("recDraw").onclick=drawRec;
+  document.getElementById("recDraw10").onclick=function(){for(var k=0;k<10;k++)drawRec();};
+
+  /* ---- 04 permutation ---- */
+  var samples=[],sum=0,hist=document.getElementById("hist");
+  function run(k){for(var i=0;i<k;i++){var v=shuffledRate(B);samples.push(v);sum+=v;}drawHist();}
+  function drawHist(){
+    document.getElementById("runCount").textContent=samples.length;
+    var mu=samples.length?sum/samples.length:0;
+    document.getElementById("nullMean").textContent=samples.length?fmt(mu)+"%":"—";
+    /* Two-sided, as in the paper: how often does chance land at least as far
+       from the shuffled mean as the real value does? */
+    var dObs=Math.abs(OBS-mu),far=0,q;
+    for(q=0;q<samples.length;q++){if(Math.abs(samples[q]-mu)>=dObs-1e-9)far++;}
+    document.getElementById("beatCount").textContent=samples.length?fmt(far/samples.length,3):"—";
+    var LO=14,HI=27,BIN=0.4,nb=Math.round((HI-LO)/BIN),c=new Array(nb).fill(0),mx=1,i;
+    for(i=0;i<samples.length;i++){var b=Math.floor((samples[i]-LO)/BIN);if(b>=0&&b<nb){c[b]++;if(c[b]>mx)mx=c[b];}}
+    var W=640,H=230,L=34,R=10,T=14,Bm=30,pw=W-L-R,ph=H-T-Bm;
+    var X=function(v){return L+(v-LO)/(HI-LO)*pw;},s=[];
+    s.push('<line x1="'+L+'" y1="'+(T+ph)+'" x2="'+(W-R)+'" y2="'+(T+ph)+'" stroke="var(--line)"/>');
+    for(var v=16;v<=26;v+=2){
+      s.push('<line x1="'+X(v).toFixed(1)+'" y1="'+(T+ph)+'" x2="'+X(v).toFixed(1)+'" y2="'+(T+ph+4)+'" stroke="var(--line)"/>');
+      s.push('<text class="axis" x="'+X(v).toFixed(1)+'" y="'+(T+ph+16)+'" text-anchor="middle">'+v+'%</text>');
+    }
+    s.push('<text class="axis" x="'+L+'" y="'+(T+ph+27)+'">agreement after the pairing is shuffled</text>');
+    var bw=pw/nb;
+    for(i=0;i<nb;i++){if(!c[i])continue;var h=c[i]/mx*ph;
+      s.push('<rect x="'+(L+i*bw).toFixed(1)+'" y="'+(T+ph-h).toFixed(1)+'" width="'+Math.max(bw-1,1).toFixed(1)+'" height="'+h.toFixed(1)+'" fill="var(--blue)" opacity="0.55"/>');}
+    s.push('<line x1="'+X(OBS).toFixed(1)+'" y1="'+T+'" x2="'+X(OBS).toFixed(1)+'" y2="'+(T+ph)+'" stroke="var(--accent)" stroke-width="2"/>');
+    s.push('<line x1="'+(W-R-104)+'" y1="'+(T+6)+'" x2="'+(W-R-94)+'" y2="'+(T+6)+'" stroke="var(--accent)" stroke-width="2"/>');
+    s.push('<text class="axis" x="'+(W-R-88)+'" y="'+(T+9)+'" fill="var(--accent)">observed 19.78%</text>');
+    hist.innerHTML=s.join("");
+  }
+  document.getElementById("b1").onclick=function(){run(1);};
+  document.getElementById("b200").onclick=function(){run(200);};
+  document.getElementById("bReset").onclick=function(){samples=[];sum=0;beat=0;drawHist();};
+
+  /* ---- 05 injection ---- */
+  var injSvg=document.getElementById("injBar");
+  function runInjection(rho){
+    var Bv=new Uint8Array(N),i;
+    for(i=0;i<N;i++)Bv[i]=(Math.random()<rho)?A[i]:B[i];
+    var m=0;for(i=0;i<N;i++)if(A[i]===Bv[i])m++;
+    var obs=m/N*100,acc=0,R=120;
+    for(i=0;i<R;i++)acc+=shuffledRate(Bv);
+    var nul=acc/R,exc=obs-nul,det=exc>=2.7;
+    document.getElementById("injObs").textContent=fmt(obs)+"%";
+    document.getElementById("injNull").textContent=fmt(nul)+"%";
+    var e=document.getElementById("injExc");
+    e.textContent=(exc>=0?"+":"")+fmt(exc,2)+" pp";
+    e.style.color=det?"var(--good)":"var(--ink)";
+    var vd=document.getElementById("injVerdict");
+    vd.textContent=det?"yes":"no";vd.style.color=det?"var(--good)":"var(--ink-faint)";
+    var W=640,L=8,Rr=8,pw=W-L-Rr,X=function(v){return L+v/45*pw;},s=[];
+    s.push('<line x1="'+L+'" y1="58" x2="'+(W-Rr)+'" y2="58" stroke="var(--line)"/>');
+    for(var t=0;t<=45;t+=5){s.push('<text class="axis" x="'+X(t).toFixed(1)+'" y="74" text-anchor="middle">'+t+'%</text>');}
+    s.push('<rect x="'+L+'" y="20" width="'+(X(nul)-L).toFixed(1)+'" height="14" fill="var(--ink-faint)" opacity="0.45"/>');
+    s.push('<rect x="'+L+'" y="36" width="'+(X(obs)-L).toFixed(1)+'" height="14" fill="'+(det?"var(--good)":"var(--accent)")+'"/>');
+    s.push('<text class="axis" x="'+(X(nul)+5).toFixed(1)+'" y="31">shuffled '+fmt(nul,1)+'%</text>');
+    s.push('<text class="axis" x="'+(X(obs)+5).toFixed(1)+'" y="47">observed '+fmt(obs,1)+'%</text>');
+    injSvg.innerHTML=s.join("");
+  }
+  var injEl=document.getElementById("inj");
+  injEl.oninput=function(){
+    var rho=+injEl.value/100;
+    document.getElementById("injVal").textContent=injEl.value+"%";
+    runInjection(rho);
+  };
+
+  /* ---- 06 ceiling, computed from the marginals ---- */
+  (function(){
+    var ceil=0,chance=0;
+    for(var g=0;g<G.length;g++){
+      var idx=G[g],n=idx.length,ca=[0,0,0,0],cb=[0,0,0,0],i;
+      for(i=0;i<n;i++){ca[A[idx[i]]]++;cb[B[idx[i]]]++;}
+      for(i=0;i<4;i++){ceil+=Math.min(ca[i],cb[i]);chance+=ca[i]*cb[i]/n;}
+    }
+    var C=ceil/N*100,H=chance/N*100;
+    document.getElementById("ceilV").textContent=fmt(C)+"%";
+    document.getElementById("chanceV").textContent=fmt(H)+"%";
+    var W=640,L=10,R=10,pw=W-L-R,X=function(v){return L+v/100*pw;},s=[];
+    s.push('<rect x="'+L+'" y="34" width="'+(X(H)-L).toFixed(1)+'" height="26" fill="var(--ink-faint)" opacity="0.28"/>');
+    s.push('<rect x="'+X(H).toFixed(1)+'" y="34" width="'+(X(C)-X(H)).toFixed(1)+'" height="26" fill="var(--blue)" opacity="0.3"/>');
+    s.push('<rect x="'+X(C).toFixed(1)+'" y="34" width="'+(X(100)-X(C)).toFixed(1)+'" height="26" fill="var(--line)" opacity="0.5"/>');
+    s.push('<line x1="'+X(OBS).toFixed(1)+'" y1="26" x2="'+X(OBS).toFixed(1)+'" y2="68" stroke="var(--accent)" stroke-width="2"/>');
+    s.push('<text class="axis" x="'+X(OBS).toFixed(1)+'" y="20" text-anchor="middle" fill="var(--accent)">observed</text>');
+    s.push('<text class="axis" x="'+(L+4)+'" y="80">chance floor</text>');
+    s.push('<text class="axis" x="'+((X(H)+X(C))/2).toFixed(1)+'" y="80" text-anchor="middle">the only room a real effect had</text>');
+    s.push('<text class="axis" x="'+((X(C)+X(100))/2).toFixed(1)+'" y="80" text-anchor="middle">impossible</text>');
+    s.push('<line x1="'+L+'" y1="92" x2="'+(W-R)+'" y2="92" stroke="var(--line)"/>');
+    for(var t=0;t<=100;t+=20){s.push('<text class="axis" x="'+X(t).toFixed(1)+'" y="106" text-anchor="middle">'+t+'%</text>');}
+    document.getElementById("scale").innerHTML=s.join("");
+  })();
+
+  /* ---- 07 quadrature ---- */
+  var TAU=0.004,dF=function(a){return Math.exp(-a/TAU)/TAU;},adaptive=false;
+  function nodesFor(n){var out=[],i;
+    if(adaptive){var lo=Math.log(1e-6),hi=0;for(i=0;i<n;i++)out.push(Math.exp(lo+(hi-lo)*(i+0.5)/n));}
+    else{for(i=0;i<n;i++)out.push((i+0.5)/n);}
+    return out;}
+  function estimate(n){var i,acc=0;
+    if(adaptive){var lo=Math.log(1e-6),hi=0;
+      for(i=0;i<n;i++){var a=Math.exp(lo+(hi-lo)*(i+0.5)/n);acc+=dF(a)*a*(hi-lo)/n;}}
+    else{for(i=0;i<n;i++)acc+=dF((i+0.5)/n)/n;}
+    return acc;}
+  function drawQuad(){
+    var n=+document.getElementById("nodes").value;
+    document.getElementById("nodeVal").textContent=n;
+    var est=estimate(n),truth=1-Math.exp(-1/TAU),res=Math.abs(est-truth);
+    document.getElementById("resid").textContent=res<0.001?"< 0.001":fmt(res,3);
+    document.getElementById("captured").textContent=fmt(Math.min(est/truth,1)*100,1)+"%";
+    var W=640,H=220,L=40,R=12,T=14,Bm=32,pw=W-L-R,ph=H-T-Bm;
+    var lo=-5,hi=0,X=function(a){return L+(Math.log(Math.max(a,1e-5))/Math.LN10-lo)/(hi-lo)*pw;};
+    var mxY=dF(0),Y=function(v){return T+ph-Math.min(v/mxY,1)*ph;},s=[],i,pts=[];
+    for(i=0;i<=260;i++){var a=Math.pow(10,lo+(hi-lo)*i/260);pts.push(X(a).toFixed(1)+","+Y(dF(a)).toFixed(1));}
+    s.push('<line x1="'+L+'" y1="'+(T+ph)+'" x2="'+(W-R)+'" y2="'+(T+ph)+'" stroke="var(--line)"/>');
+    var ticks=[[1e-5,"0.001%"],[1e-4,"0.01%"],[1e-3,"0.1%"],[1e-2,"1%"],[1e-1,"10%"],[1,"100%"]];
+    for(i=0;i<ticks.length;i++){var tx=X(ticks[i][0]);
+      s.push('<line x1="'+tx.toFixed(1)+'" y1="'+(T+ph)+'" x2="'+tx.toFixed(1)+'" y2="'+(T+ph+4)+'" stroke="var(--line)"/>');
+      s.push('<text class="axis" x="'+tx.toFixed(1)+'" y="'+(T+ph+16)+'" text-anchor="middle">'+ticks[i][1]+'</text>');}
+    s.push('<text class="axis" x="'+L+'" y="'+(T+ph+28)+'">volume-dial position (logarithmic)</text>');
+    s.push('<polyline points="'+pts.join(" ")+'" fill="none" stroke="var(--blue)" stroke-width="2"/>');
+    var nd=nodesFor(n);
+    for(i=0;i<nd.length;i++){if(nd[i]<1e-5)continue;
+      s.push('<circle cx="'+X(nd[i]).toFixed(1)+'" cy="'+(T+ph).toFixed(1)+'" r="2.6" fill="var(--accent)"/>');}
+    s.push('<text class="axis" x="'+(W-R)+'" y="'+(T+10)+'" text-anchor="end">model sensitivity</text>');
+    document.getElementById("quad").innerHTML=s.join("");
+  }
+  document.getElementById("nodes").oninput=drawQuad;
+  document.getElementById("tUni").onclick=function(){adaptive=false;this.setAttribute("aria-pressed","true");document.getElementById("tAda").setAttribute("aria-pressed","false");drawQuad();};
+  document.getElementById("tAda").onclick=function(){adaptive=true;this.setAttribute("aria-pressed","true");document.getElementById("tUni").setAttribute("aria-pressed","false");drawQuad();};
+
+  /* ---- 08 positive controls ---- */
+  var CT=[["IG 20 bins vs IG 30 bins",77.95,38.92,true],
+          ["IG 20 bins vs IG 10 bins",66.37,36.88,true],
+          ["TreeSHAP split in half",41.77,36.44,true],
+          ["TreeSHAP vs IG",19.78,19.87,false]];
+  var bs=[];
+  for(var q=0;q<CT.length;q++){var r=CT[q],col=r[3]?"var(--accent)":"var(--blue)";
+    bs.push('<div class="barrow"><div class="barlab">'+r[0]
+      +'<div class="bartrack"><div class="barfill" style="width:'+r[1]+'%;background:'+col+'"></div></div>'
+      +'<div class="bartrack" style="margin-top:3px"><div class="barfill" style="width:'+r[2]+'%;background:var(--ink-faint)"></div></div>'
+      +'</div><div class="barval">'+fmt(r[1],1)+'%</div></div>');}
+  bs.push('<p class="note">Coloured bar: observed agreement. Grey bar beneath it: agreement by chance.</p>');
+  document.getElementById("ctrlBars").innerHTML=bs.join("");
+
+  drawRec(); tally.n=0; tally.m=0; document.getElementById("recTally").textContent="";
+  run(300);
+  runInjection(0);
+  drawQuad();
+})();
+</script>
